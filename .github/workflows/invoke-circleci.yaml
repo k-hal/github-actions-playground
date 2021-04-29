@@ -1,0 +1,26 @@
+name: invoke circleci
+
+
+on: push
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set branch name
+        run: |
+          BRANCH=$(echo ${{ github.ref }} | sed -e "s#refs/heads/##g")
+          echo "::set-output name=BRANCH::${BRANCH}"
+        id: branch
+      - name: Call CircleCI API
+        run: |
+          echo "${{ steps.branch.outputs.BRANCH }}"
+          curl \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -H "Circle-Token: ${{ secrets.CIRCLECI_TOKEN }}" \
+            -d '{ "branch": "${{ steps.branch.outputs.BRANCH  }}" }' \
+            https://circleci.com/api/v2/project/github/${{ github.event.repository.full_name }}/pipeline
