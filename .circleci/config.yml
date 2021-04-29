@@ -7,10 +7,20 @@ jobs:
     steps:
     - checkout
     - run: uname -a
+    - run: date
 
 
 workflows:
   version: 2
   test:
+    jobs:
+      - setup
+  daily_workflow:
+    triggers:
+      - schedule:
+          cron: "0 20 * * *"
+          filters:
+            branches:
+              only: /main/
     jobs:
       - setup
