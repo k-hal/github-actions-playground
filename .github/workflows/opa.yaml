@@ -2,14 +2,14 @@ name: Test opa policy
 on:
   push:
   pull_request:
-  schedule:
-    - cron: '0 20 * * 1'
 jobs:
   conftest:
     name: Test opa policy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-      name: checkout
-    - name: test open policy agent for circleci
-      run: docker run -v `pwd`:`pwd` -w `pwd` --rm openpolicyagent/opa test -v .circleci/policy/
+      - uses: actions/checkout@v3.5.2
+        name: checkout
+      - name: test open policy agent for circleci
+        uses: docker://openpolicyagent/opa:latest
+        with:
+          args: test -v .circleci/policy/
