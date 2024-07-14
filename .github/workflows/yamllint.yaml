@@ -13,7 +13,7 @@ jobs:
           yamllint -c .github/workflows/.yamllint .github/
       - name: run yamllint
         if: ${{ failure() }}
-        uses: reviewdog/action-yamllint@v1.17.0
+        uses: reviewdog/action-yamllint@v1.18.0
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
