@@ -3,7 +3,7 @@ version : 2.1
 jobs:
   setup:
     docker:
-      - image : ubuntu:20.04
+      - image : ubuntu:24.04
     steps:
     - checkout
     - run: uname -a
